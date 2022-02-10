@@ -15,34 +15,19 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package ru.ancevt.commons;
+package ru.ancevt.commons.io;
 
-public class Pair<T1, T2> {
-    private final T1 first;
-    private final T2 second;
+public class ByteFactory {
 
-    private Pair(T1 first, T2 second) {
-        this.first = first;
-        this.second = second;
+    public static ByteInput createByteInput(byte[] bytes) {
+        return new ByteInput(bytes);
     }
 
-    public T1 getFirst() {
-        return first;
+    public static ByteOutput createByteOutput(int length) {
+        return new ByteOutput(length);
     }
 
-    public T2 getSecond() {
-        return second;
-    }
-
-    public static <T1, T2> Pair<T1, T2> of(T1 first, T2 second) {
-        return new Pair<>(first, second);
-    }
-
-    @Override
-    public String toString() {
-        return "Pair{" +
-                "first=" + first +
-                ", second=" + second +
-                '}';
+    public static ByteOutput createByteOutput() {
+        return new ByteOutput();
     }
 }

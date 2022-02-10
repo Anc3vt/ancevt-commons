@@ -17,13 +17,16 @@
  */
 package ru.ancevt.commons;
 
-public class Pair<T1, T2> {
+public class Triple<T1, T2, T3> {
+
     private final T1 first;
     private final T2 second;
+    private final T3 third;
 
-    private Pair(T1 first, T2 second) {
+    private Triple(T1 first, T2 second, T3 third) {
         this.first = first;
         this.second = second;
+        this.third = third;
     }
 
     public T1 getFirst() {
@@ -34,15 +37,20 @@ public class Pair<T1, T2> {
         return second;
     }
 
-    public static <T1, T2> Pair<T1, T2> of(T1 first, T2 second) {
-        return new Pair<>(first, second);
+    public T3 getThird() {
+        return third;
+    }
+
+    public static <T1, T2, T3> Triple<T1, T2, T3> of(T1 first, T2 second, T3 third) {
+        return new Triple<>(first, second, third);
     }
 
     @Override
     public String toString() {
-        return "Pair{" +
+        return "Triple{" +
                 "first=" + first +
                 ", second=" + second +
+                ", third=" + third +
                 '}';
     }
 }
