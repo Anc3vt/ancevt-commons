@@ -21,16 +21,20 @@ import java.util.concurrent.CountDownLatch;
 
 public class Lock {
 
-    private final CountDownLatch countDownLatch;
+    private CountDownLatch countDownLatch;
     private State state;
 
     public Lock() {
-        countDownLatch = new CountDownLatch(1);
-        state = State.BEFORE;
+        state = State.NOT_LOCKED;
     }
 
     public void lock() {
+        if(state == State.LOCKED) {
+            throw new IllegalStateException("Lock is already locked");
+        }
+
         try {
+            countDownLatch = new CountDownLatch(1);
             state = State.LOCKED;
             countDownLatch.await();
         } catch (InterruptedException e) {
@@ -39,6 +43,13 @@ public class Lock {
     }
 
     public void unlock() {
+        if(state == State.NOT_LOCKED) {
+            throw new IllegalStateException("Lock is not locked yet");
+        } else
+        if(state == State.UNLOCKED) {
+            throw new IllegalStateException("Lock is already unlocked");
+        }
+
         state = State.UNLOCKED;
         countDownLatch.countDown();
     }
@@ -52,7 +63,7 @@ public class Lock {
     }
 
     public enum State {
-        BEFORE,
+        NOT_LOCKED,
         LOCKED,
         UNLOCKED
     }

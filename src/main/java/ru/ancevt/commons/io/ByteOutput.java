@@ -27,12 +27,12 @@ public class ByteOutput {
     private final ByteArrayOutputStream byteArrayOutputStream;
     private final DataOutputStream dataOutputStream;
 
-    ByteOutput(int initialSize) {
+    private ByteOutput(int initialSize) {
         byteArrayOutputStream = new ByteArrayOutputStream(initialSize);
         dataOutputStream = new DataOutputStream(byteArrayOutputStream);
     }
 
-    ByteOutput() {
+    private ByteOutput() {
         byteArrayOutputStream = new ByteArrayOutputStream();
         dataOutputStream = new DataOutputStream(byteArrayOutputStream);
     }
@@ -202,5 +202,13 @@ public class ByteOutput {
             handleIOException(e);
             throw new IllegalStateException(e);
         }
+    }
+
+    public static ByteOutput newInstance(int length) {
+        return new ByteOutput(length);
+    }
+
+    public static ByteOutput newInstance() {
+        return new ByteOutput();
     }
 }

@@ -15,19 +15,21 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package ru.ancevt.commons.io;
+package ru.ancevt.commons.excpetion;
 
-public class ByteFactory {
-
-    public static ByteInput createByteInput(byte[] bytes) {
-        return new ByteInput(bytes);
+public class NotImplementedException extends IllegalStateException {
+    public NotImplementedException() {
     }
 
-    public static ByteOutput createByteOutput(int length) {
-        return new ByteOutput(length);
+    public NotImplementedException(String s) {
+        super(s);
     }
 
-    public static ByteOutput createByteOutput() {
-        return new ByteOutput();
+    public NotImplementedException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public NotImplementedException(Throwable cause) {
+        super(cause);
     }
 }

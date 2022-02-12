@@ -25,13 +25,21 @@ import java.nio.charset.StandardCharsets;
 
 public class ByteInput implements DataInput {
 
+
     private final DataInputStream dataInputStream;
     private final ByteArrayInputStream byteArrayInputStream;
 
-    ByteInput(byte[] bytes) {
+    private final byte[] bytes;
+
+    private ByteInput(byte[] bytes) {
+        this.bytes = bytes;
         dataInputStream = new DataInputStream(
                 byteArrayInputStream = new ByteArrayInputStream(bytes)
         );
+    }
+
+    public byte[] getBytes() {
+        return bytes;
     }
 
     private void handleIOException(IOException ex) {
@@ -204,5 +212,9 @@ public class ByteInput implements DataInput {
             handleIOException(e);
             throw new IllegalStateException(e);
         }
+    }
+
+    public static ByteInput newInstance(byte[] bytes) {
+        return new ByteInput(bytes);
     }
 }
