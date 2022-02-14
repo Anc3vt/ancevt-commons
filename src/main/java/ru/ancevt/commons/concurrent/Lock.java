@@ -18,6 +18,7 @@
 package ru.ancevt.commons.concurrent;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 public class Lock {
 
@@ -28,30 +29,37 @@ public class Lock {
         state = State.NOT_LOCKED;
     }
 
-    public void lock() {
-        if(state == State.LOCKED) {
+    public boolean lock() {
+        return lock(Long.MAX_VALUE, TimeUnit.DAYS);
+    }
+
+    public boolean lock(long timeout, TimeUnit timeUnit) {
+        if (state == State.LOCKED) {
             throw new IllegalStateException("Lock is already locked");
         }
 
         try {
             countDownLatch = new CountDownLatch(1);
             state = State.LOCKED;
-            countDownLatch.await();
+            return countDownLatch.await(timeout, timeUnit);
         } catch (InterruptedException e) {
             throw new IllegalStateException(e);
         }
     }
 
     public void unlock() {
-        if(state == State.NOT_LOCKED) {
+        if (state == State.NOT_LOCKED) {
             throw new IllegalStateException("Lock is not locked yet");
-        } else
-        if(state == State.UNLOCKED) {
+        } else if (state == State.UNLOCKED) {
             throw new IllegalStateException("Lock is already unlocked");
         }
 
         state = State.UNLOCKED;
         countDownLatch.countDown();
+    }
+
+    public void unlockIfLocked() {
+        if(isLocked()) unlock();
     }
 
     public State getState() {
