@@ -6,7 +6,7 @@
 
     <groupId>ru.ancevt.commons</groupId>
     <artifactId>ancevt-commons</artifactId>
-    <version>1.0.0.0</version>
+    <version>1.0.0.0-SNAPSHOT</version>
 
     <name>Ancevt Commons Library</name>
     <url>https://github.com/Anc3vt/ancevt-commons</url>
@@ -31,12 +31,20 @@
             <id>ancevt</id>
             <url>https://packages.ancevt.ru/releases</url>
         </repository>
+        <snapshotRepository>
+            <id>ancevt-snapshots</id>
+            <url>https://packages.ancevt.ru/snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <repositories>
         <repository>
             <id>ancevt</id>
             <url>https://packages.ancevt.ru/releases</url>
+        </repository>
+        <repository>
+            <id>ancevt-snapshots</id>
+            <url>https://packages.ancevt.ru/snapshots</url>
         </repository>
     </repositories>
 
