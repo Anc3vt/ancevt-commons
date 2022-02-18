@@ -6,7 +6,7 @@
 
     <groupId>ru.ancevt.commons</groupId>
     <artifactId>ancevt-commons</artifactId>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1</version>
 
     <name>Ancevt Commons Library</name>
     <url>https://github.com/Anc3vt/ancevt-commons</url>
