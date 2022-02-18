@@ -72,23 +72,27 @@ public class ByteInputReader {
         StringBuilder s = new StringBuilder();
 
         readTypes.forEach(readType -> {
-            switch (readType) {
-                case BYTE -> s.append("b)").append(debugByteInput.readUnsignedByte()).append(' ');
-                case SHORT -> s.append("s)").append(debugByteInput.readUnsignedShort()).append(' ');
-                case INT -> s.append("i)").append(debugByteInput.readInt()).append(' ');
-                case FLOAT -> s.append("f)").append(debugByteInput.readFloat()).append(' ');
-                case BYTE_STRING -> {
-                    s.append("b)b ");
-                    s.append("S)").append(debugByteInput.readUtf(byte.class)).append(' ');
+            try {
+                switch (readType) {
+                    case BYTE -> s.append("b)").append(debugByteInput.readUnsignedByte()).append(' ');
+                    case SHORT -> s.append("s)").append(debugByteInput.readUnsignedShort()).append(' ');
+                    case INT -> s.append("i)").append(debugByteInput.readInt()).append(' ');
+                    case FLOAT -> s.append("f)").append(debugByteInput.readFloat()).append(' ');
+                    case BYTE_STRING -> {
+                        s.append("b)b ");
+                        s.append("S)").append(debugByteInput.readUtf(byte.class)).append(' ');
+                    }
+                    case SHORT_STRING -> {
+                        s.append("b)s ");
+                        s.append("S)").append(debugByteInput.readUtf(short.class)).append(' ');
+                    }
+                    case INT_STRING -> {
+                        s.append("b)i ");
+                        s.append("S)").append(debugByteInput.readUtf(int.class)).append(' ');
+                    }
                 }
-                case SHORT_STRING -> {
-                    s.append("b)s ");
-                    s.append("S)").append(debugByteInput.readUtf(short.class)).append(' ');
-                }
-                case INT_STRING -> {
-                    s.append("b)i ");
-                    s.append("S)").append(debugByteInput.readUtf(int.class)).append(' ');
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
