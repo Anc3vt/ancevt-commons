@@ -27,6 +27,10 @@ public class Holder<T> {
     public Holder() {
     }
 
+    public boolean isEmpty() {
+        return value == null;
+    }
+
     public T getValue() {
         return value;
     }
