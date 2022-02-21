@@ -42,7 +42,7 @@ public class ByteInput implements DataInput {
         return bytes;
     }
 
-    private void handleIOException(IOException ex) {
+    private void handleIfIOException(IOException ex) {
         throw new IllegalStateException(ex);
     }
 
@@ -62,6 +62,15 @@ public class ByteInput implements DataInput {
         return readUtf(len);
     }
 
+    public byte[] readBytes(int length) {
+        try {
+            return dataInputStream.readNBytes(length);
+        } catch (IOException e) {
+            handleIfIOException(e);
+            throw new IllegalStateException(e);
+        }
+    }
+
     public String readUtf(int length) {
         byte[] b = new byte[length];
         readFully(b);
@@ -73,7 +82,7 @@ public class ByteInput implements DataInput {
         try {
             dataInputStream.readFully(b);
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -83,7 +92,7 @@ public class ByteInput implements DataInput {
         try {
             dataInputStream.readFully(b, off, len);
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -93,7 +102,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.skipBytes(n);
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -103,7 +112,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.readBoolean();
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -113,7 +122,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.readByte();
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -123,7 +132,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.readUnsignedByte();
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -133,7 +142,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.readShort();
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -143,7 +152,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.readUnsignedShort();
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -153,7 +162,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.readChar();
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -163,7 +172,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.readInt();
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -173,7 +182,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.readLong();
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -183,7 +192,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.readFloat();
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -193,7 +202,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.readDouble();
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -209,7 +218,7 @@ public class ByteInput implements DataInput {
         try {
             return dataInputStream.readUTF();
         } catch (IOException e) {
-            handleIOException(e);
+            handleIfIOException(e);
             throw new IllegalStateException(e);
         }
     }
