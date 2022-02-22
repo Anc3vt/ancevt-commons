@@ -4,6 +4,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Async {
 
+    public static void run(Runnable runnable) {
+        new Thread(()->{
+            runnable.run();
+        }).start();
+    }
+
     public static void runLater(long time, TimeUnit timeUnit, Runnable runnable) {
         new Thread(()->{
             new Lock().lock(time, timeUnit);
