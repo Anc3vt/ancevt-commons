@@ -5,9 +5,7 @@ import java.util.concurrent.TimeUnit;
 public class Async {
 
     public static void run(Runnable runnable) {
-        new Thread(()->{
-            runnable.run();
-        }).start();
+        new Thread(runnable).start();
     }
 
     public static void runLater(long time, TimeUnit timeUnit, Runnable runnable) {
