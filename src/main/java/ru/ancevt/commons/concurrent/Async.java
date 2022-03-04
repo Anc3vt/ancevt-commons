@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Async {
 
-    public static void sleep(long time, TimeUnit timeUnit) {
+    public static void wait(long time, TimeUnit timeUnit) {
         new Lock().lock(time, timeUnit);
     }
 
