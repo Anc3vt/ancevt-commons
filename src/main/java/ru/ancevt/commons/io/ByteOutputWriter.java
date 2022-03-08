@@ -33,36 +33,36 @@ public class ByteOutputWriter {
         this(ByteOutput.newInstance());
     }
 
-    public byte[] toArray() {
+    public byte[] toByteArray() {
         return byteOutput.toArray();
     }
 
-    public ByteOutputWriter writeBytes(byte[] bytes) {
+    public synchronized ByteOutputWriter writeBytes(byte[] bytes) {
         byteOutput.write(bytes);
         return this;
     }
 
-    public ByteOutputWriter writeByte(int b) {
+    public synchronized ByteOutputWriter writeByte(int b) {
         byteOutput.writeByte(b);
         return this;
     }
 
-    public ByteOutputWriter writeShort(int s) {
+    public synchronized ByteOutputWriter writeShort(int s) {
         byteOutput.writeShort(s);
         return this;
     }
 
-    public ByteOutputWriter writeInt(int i) {
+    public synchronized ByteOutputWriter writeInt(int i) {
         byteOutput.writeInt(i);
         return this;
     }
 
-    public ByteOutputWriter writeFloat(float f) {
+    public synchronized ByteOutputWriter writeFloat(float f) {
         byteOutput.writeFloat(f);
         return this;
     }
 
-    public ByteOutputWriter writeUtf(Class<?> lengthType, String string) {
+    public synchronized ByteOutputWriter writeUtf(Class<?> lengthType, String string) {
         byteOutput.writeUtf(lengthType, string);
         return this;
     }
