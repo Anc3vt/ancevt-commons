@@ -37,6 +37,10 @@ public class ByteOutputWriter {
         return byteOutput.toArray();
     }
 
+    public boolean hasData() {
+        return byteOutput.toArray().length > 0;
+    }
+
     public synchronized ByteOutputWriter writeBytes(byte[] bytes) {
         byteOutput.write(bytes);
         return this;

@@ -7,7 +7,7 @@ package ru.ancevt.util.system;
 public class UnixDisplay {
 
     public static void main(String[] args) {
-        System.out.println(UnixDisplay.format("{r}red{}{b}blue{}"));
+        System.out.println(UnixDisplay.colorize("{r}red{}{b}blue{}"));
     }
 
     public static final String RESET = "\u001B[0m";
@@ -30,23 +30,23 @@ public class UnixDisplay {
     public static final String CYAN_BACKGROUND = "\u001B[46m";
     public static final String WHITE_BACKGROUND = "\u001B[47m";
 
-    private static final String B = "\\{a\\}";
-    private static final String R = "\\{r\\}";
-    private static final String G = "\\{g\\}";
-    private static final String Y = "\\{y\\}";
-    private static final String BL = "\\{b\\}";
-    private static final String P = "\\{p\\}";
-    private static final String C = "\\{c\\}";
-    private static final String W = "\\{w\\}";
+    private static final String B = "\\{a}";
+    private static final String R = "\\{r}";
+    private static final String G = "\\{g}";
+    private static final String Y = "\\{y}";
+    private static final String BL = "\\{b}";
+    private static final String P = "\\{p}";
+    private static final String C = "\\{c}";
+    private static final String W = "\\{w}";
 
-    private static final String BG_B = "\\{A\\}";
-    private static final String BG_R = "\\{R\\}";
-    private static final String BG_G = "\\{G\\}";
-    private static final String BG_Y = "\\{Y\\}";
-    private static final String BG_BL = "\\{B\\}";
-    private static final String BG_P = "\\{P\\}";
-    private static final String BG_C = "\\{C\\}";
-    private static final String BG_W = "\\{W\\}";
+    private static final String BG_B = "\\{A}";
+    private static final String BG_R = "\\{R}";
+    private static final String BG_G = "\\{G}";
+    private static final String BG_Y = "\\{Y}";
+    private static final String BG_BL = "\\{B}";
+    private static final String BG_P = "\\{P}";
+    private static final String BG_C = "\\{C}";
+    private static final String BG_W = "\\{W}";
 
     private static final String RES = "\\{\\}";
 
@@ -54,7 +54,7 @@ public class UnixDisplay {
 
     private static boolean enabled = true;
 
-    public static String format(String source) {
+    public static String colorize(String source) {
         if (!enabled) {
             source = source.replaceAll(B, EMPTY);
             source = source.replaceAll(R, EMPTY);
