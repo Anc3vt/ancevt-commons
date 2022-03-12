@@ -52,7 +52,7 @@ public class UnixDisplay {
 
     private static final String EMPTY = "";
 
-    private static boolean enabled = true;
+    private static boolean enabled = false;
 
     public static String colorize(String source) {
         if (!enabled) {
