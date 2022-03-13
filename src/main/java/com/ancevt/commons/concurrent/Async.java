@@ -1,4 +1,4 @@
-package ru.ancevt.commons.concurrent;
+package com.ancevt.commons.concurrent;
 
 import java.util.concurrent.TimeUnit;
 

@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package ru.ancevt.commons.io;
+package com.ancevt.commons.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

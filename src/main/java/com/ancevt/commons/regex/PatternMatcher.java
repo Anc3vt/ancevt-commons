@@ -1,4 +1,4 @@
-package ru.ancevt.commons.regex;
+package com.ancevt.commons.regex;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

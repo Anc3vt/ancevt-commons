@@ -1,4 +1,4 @@
-package ru.ancevt.commons.debug;
+package com.ancevt.commons.debug;
 
 public class Trace {
 

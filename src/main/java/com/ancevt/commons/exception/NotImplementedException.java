@@ -15,32 +15,21 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package ru.ancevt.commons;
+package com.ancevt.commons.exception;
 
-public class Holder<T> {
-    private T value;
-
-    public Holder(T value) {
-        this.value = value;
+public class NotImplementedException extends IllegalStateException {
+    public NotImplementedException() {
     }
 
-    public Holder() {
+    public NotImplementedException(String s) {
+        super(s);
     }
 
-    public boolean isEmpty() {
-        return value == null;
+    public NotImplementedException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public T getValue() {
-        return value;
-    }
-
-    public void setValue(T value) {
-        this.value = value;
-    }
-
-    @Override
-    public String toString() {
-        return value == null ? null : value.toString();
+    public NotImplementedException(Throwable cause) {
+        super(cause);
     }
 }

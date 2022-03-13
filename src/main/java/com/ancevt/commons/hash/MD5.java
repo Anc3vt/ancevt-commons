@@ -1,4 +1,4 @@
-package ru.ancevt.commons.hash;
+package com.ancevt.commons.hash;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

@@ -1,4 +1,4 @@
-package ru.ancevt.commons.io;
+package com.ancevt.commons.io;
 
 public class ByteInputReader {
 

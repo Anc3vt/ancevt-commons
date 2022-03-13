@@ -1,4 +1,4 @@
-package ru.ancevt.util.system;
+package com.ancevt.util.system;
 
 /**
  *

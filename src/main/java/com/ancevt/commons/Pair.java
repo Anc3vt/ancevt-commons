@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package ru.ancevt.commons;
+package com.ancevt.commons;
 
 public class Pair<T1, T2> {
     private final T1 first;

@@ -15,42 +15,32 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package ru.ancevt.commons;
+package com.ancevt.commons;
 
-public class Triple<T1, T2, T3> {
+public class Holder<T> {
+    private T value;
 
-    private final T1 first;
-    private final T2 second;
-    private final T3 third;
-
-    private Triple(T1 first, T2 second, T3 third) {
-        this.first = first;
-        this.second = second;
-        this.third = third;
+    public Holder(T value) {
+        this.value = value;
     }
 
-    public T1 getFirst() {
-        return first;
+    public Holder() {
     }
 
-    public T2 getSecond() {
-        return second;
+    public boolean isEmpty() {
+        return value == null;
     }
 
-    public T3 getThird() {
-        return third;
+    public T getValue() {
+        return value;
     }
 
-    public static <T1, T2, T3> Triple<T1, T2, T3> of(T1 first, T2 second, T3 third) {
-        return new Triple<>(first, second, third);
+    public void setValue(T value) {
+        this.value = value;
     }
 
     @Override
     public String toString() {
-        return "Triple{" +
-                "first=" + first +
-                ", second=" + second +
-                ", third=" + third +
-                '}';
+        return value == null ? null : value.toString();
     }
 }
