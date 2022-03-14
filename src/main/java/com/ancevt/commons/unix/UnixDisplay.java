@@ -1,7 +1,6 @@
 package com.ancevt.util.system;
 
 /**
- *
  * @author ancevt
  */
 public class UnixDisplay {
@@ -53,6 +52,14 @@ public class UnixDisplay {
     private static final String EMPTY = "";
 
     private static boolean enabled = false;
+
+    public static void cprint(Object o) {
+        String string = String.valueOf(o);
+        if (!string.contains("<>")) {
+            string = "<c>" + string + "<>";
+            System.out.println(colorize(string));
+        }
+    }
 
     public static String colorize(String source) {
         if (!enabled) {
@@ -118,7 +125,7 @@ public class UnixDisplay {
     public static void setEnabled(boolean enabled) {
         UnixDisplay.enabled = enabled;
     }
-    
+
     public final void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
