@@ -1,13 +1,9 @@
-package com.ancevt.util.system;
+package com.ancevt.commons.unix;
 
 /**
  * @author ancevt
  */
 public class UnixDisplay {
-
-    public static void main(String[] args) {
-        System.out.println(UnixDisplay.colorize("<r>red<><b>blue<>"));
-    }
 
     public static final String RESET = "\u001B[0m";
 
@@ -53,12 +49,10 @@ public class UnixDisplay {
 
     private static boolean enabled = false;
 
-    public static void cprint(Object o) {
-        String string = String.valueOf(o);
-        if (!string.contains("<>")) {
-            string = "<c>" + string + "<>";
-            System.out.println(colorize(string));
-        }
+    public static String debug(Object o) {
+        String string = o + "<>";
+        System.out.println(colorize(string));
+        return string;
     }
 
     public static String colorize(String source) {
@@ -131,4 +125,7 @@ public class UnixDisplay {
         System.out.flush();
     }
 
+    public static void main(String[] args) {
+
+    }
 }
