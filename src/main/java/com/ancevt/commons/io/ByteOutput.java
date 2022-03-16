@@ -45,6 +45,10 @@ public class ByteOutput {
         return byteArrayOutputStream.toByteArray();
     }
 
+    public boolean hasData() {
+        return byteArrayOutputStream.size() > 0;
+    }
+
     public ByteOutput writeUtf(Class<?> lengthType, String string) {
         try {
             byte[] stringBytes = string.getBytes(StandardCharsets.UTF_8);
