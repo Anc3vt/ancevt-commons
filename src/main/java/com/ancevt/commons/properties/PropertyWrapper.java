@@ -1,8 +1,9 @@
 package com.ancevt.commons.properties;
 
+
 import java.util.Properties;
 
-public class PropertyUtils {
+public class PropertyWrapper {
 
     public static Properties argsToProperties(String[] args, Properties properties) {
         for (String arg : args) {
