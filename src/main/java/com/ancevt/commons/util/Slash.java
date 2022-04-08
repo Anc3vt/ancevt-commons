@@ -15,34 +15,17 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.ancevt.commons;
+package com.ancevt.commons.util;
 
-public class Pair<T1, T2> {
-    private final T1 first;
-    private final T2 second;
+import java.io.File;
+import java.nio.file.Path;
 
-    private Pair(T1 first, T2 second) {
-        this.first = first;
-        this.second = second;
+public class Slash {
+    public static String slashSafe(String path) {
+        return path.replace('/', File.separatorChar);
     }
 
-    public T1 getFirst() {
-        return first;
-    }
-
-    public T2 getSecond() {
-        return second;
-    }
-
-    public static <T1, T2> Pair<T1, T2> of(T1 first, T2 second) {
-        return new Pair<>(first, second);
-    }
-
-    @Override
-    public String toString() {
-        return "Pair{" +
-                "first=" + first +
-                ", second=" + second +
-                '}';
+    public static Path slashSafe(Path path) {
+        return Path.of(path.toString().replace('/', File.separatorChar));
     }
 }
