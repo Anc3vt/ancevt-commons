@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-  <groupId>com.ancevt.d2d2world</groupId>
-  <artifactId>d2d2-world-arena-networking</artifactId>
+  <groupId>com.ancevt.d2d2</groupId>
+  <artifactId>d2d2</artifactId>
   <versioning>
     <versions>
       <version>1.0.0.4-d2d2-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20220501075549</lastUpdated>
+    <lastUpdated>20220501084758</lastUpdated>
   </versioning>
 </metadata>
