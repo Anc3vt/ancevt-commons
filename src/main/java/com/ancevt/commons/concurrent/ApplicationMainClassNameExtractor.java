@@ -2,7 +2,7 @@ package com.ancevt.commons.concurrent;
 
 import java.util.Map;
 
-public class MainClassNameExtractor {
+public class ApplicationMainClassNameExtractor {
 
     public static String get() {
         Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
@@ -10,7 +10,7 @@ public class MainClassNameExtractor {
             Thread thread = entry.getKey();
             if (thread.getId() == 1) {
                 StackTraceElement[] stackTraceElements = entry.getValue();
-                for (int i = stackTraceElements.length - 1; i >= 0; i++) {
+                for (int i = stackTraceElements.length - 1; i >= 0; i--) {
                     StackTraceElement stackTraceElement = stackTraceElements[i];
                     if (stackTraceElement.getMethodName().equals("main")) {
                         return stackTraceElement.getClassName();
