@@ -1,4 +1,4 @@
-package com.ancevt.commons.concurrent;
+package com.ancevt.commons.util;
 
 import java.util.Map;
 
