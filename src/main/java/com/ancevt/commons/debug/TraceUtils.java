@@ -1,4 +1,4 @@
-package com.skyflabs.skyv.itam;
+package com.ancevt.commons.debug;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -151,7 +151,7 @@ public class TraceUtils {
     public static Object trace(Object object, String traceId) {
         if (!tracedOnceMap.containsKey(traceId)) {
             tracedOnceMap.put(traceId, true);
-            trace("\n\n<W><b>           " + LocalDateTime.now().toString() + "           <>\n\n", traceId);
+            trace("\n\n<W><b>           " + LocalDateTime.now() + "           <>\n\n", traceId);
         }
 
         try {
