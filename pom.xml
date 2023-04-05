@@ -6,7 +6,7 @@
 
     <groupId>com.ancevt.commons</groupId>
     <artifactId>ancevt-commons</artifactId>
-    <version>1.0.0.4</version>
+    <version>1.0.0.5</version>
 
     <name>Ancevt Commons Library</name>
     <url>https://github.com/Anc3vt/ancevt-commons</url>
@@ -60,7 +60,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
 
         <junit-jupiter-api.version>5.8.2</junit-jupiter-api.version>
         <hamcrest-junit.version>2.0.0.0</hamcrest-junit.version>

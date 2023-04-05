@@ -151,11 +151,11 @@ public class TraceUtils {
     public static Object trace(Object object, String traceId) {
         if (!tracedOnceMap.containsKey(traceId)) {
             tracedOnceMap.put(traceId, true);
-            trace("\n\n<W><b>           " + LocalDateTime.now() + "           <>\n\n", traceId);
+            trace("\n\n<W><a>           " + LocalDateTime.now() + "           <>\n\n", traceId);
         }
 
         try {
-            Files.writeString(Path.of("/tmp/trace_%s.txt".formatted(traceId)), colorize(object + "<>") + "\n",
+            Files.writeString(Path.of(String.format("/tmp/trace_%s.txt", traceId)), colorize(object + "<>") + "\n",
                     StandardOpenOption.CREATE,
                     StandardOpenOption.WRITE,
                     StandardOpenOption.APPEND
@@ -166,5 +166,9 @@ public class TraceUtils {
         }
 
         return object;
+    }
+
+    public static void main(String[] args) {
+        trace("<W><a>asdsd<>");
     }
 }

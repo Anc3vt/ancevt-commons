@@ -118,5 +118,6 @@ public class StringTypeConverter {
 
     public static void main(String[] args) {
         int i = convert("1").toIntOr(0);
+        System.out.println(i);
     }
 }

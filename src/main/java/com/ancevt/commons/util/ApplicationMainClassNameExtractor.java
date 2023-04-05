@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class ApplicationMainClassNameExtractor {
 
-    public static String get() {
+    public static String get() throws MainClassNameExtractorException {
         Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
         for (Map.Entry<Thread, StackTraceElement[]> entry : map.entrySet()) {
             Thread thread = entry.getKey();
@@ -38,7 +38,7 @@ public class ApplicationMainClassNameExtractor {
         throw new MainClassNameExtractorException("Unable to extract application main class name");
     }
 
-    public static class MainClassNameExtractorException extends RuntimeException {
+    public static class MainClassNameExtractorException extends Exception {
 
         public MainClassNameExtractorException(String message) {
             super(message);
