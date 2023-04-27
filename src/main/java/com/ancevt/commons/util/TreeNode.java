@@ -65,6 +65,12 @@ public class TreeNode<T> {
         }
     }
 
+    public TreeNode<T> getRoot() {
+        TreeNode<T> current = this;
+        while (current.getParent() != null) current = current.getParent();
+        return current;
+    }
+
     public TreeNode<T> get(int index) {
         return children.get(index);
     }
@@ -90,16 +96,16 @@ public class TreeNode<T> {
     }
 
     public String toTreeString() {
-        return toTreeString(Object::toString);
+        return toTreeString(treeNode -> treeNode.getValue().toString());
     }
 
-    public String toTreeString(Function<T, String> toTreeStringFunction) {
-        return toTreeStringFunction.apply(this.getValue()) +
+    public String toTreeString(Function<TreeNode<T>, String> toTreeStringFunction) {
+        return toTreeStringFunction.apply(this) +
                 System.lineSeparator() +
                 walk(this, "", toTreeStringFunction);
     }
 
-    private String walk(TreeNode<T> node, String prefix, Function<T, String> toTreeStringFunction) {
+    private String walk(TreeNode<T> node, String prefix, Function<TreeNode<T>, String> toTreeStringFunction) {
         StringBuilder stringBuilder = new StringBuilder();
 
         TreeNode<T> n;
@@ -111,7 +117,7 @@ public class TreeNode<T> {
                 stringBuilder
                         .append(prefix)
                         .append("└─ ")
-                        .append(toTreeStringFunction.apply(n.getValue()))
+                        .append(toTreeStringFunction.apply(n))
                         .append(System.lineSeparator());
 
                 if (n.hasChildren()) {
@@ -121,7 +127,7 @@ public class TreeNode<T> {
                 stringBuilder
                         .append(prefix)
                         .append("├─ ")
-                        .append(toTreeStringFunction.apply(n.getValue()))
+                        .append(toTreeStringFunction.apply(n))
                         .append(System.lineSeparator());
 
                 if (n.hasChildren()) {
@@ -131,6 +137,11 @@ public class TreeNode<T> {
         }
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("TreeNode{value=%s,properties=%s}", value, properties);
     }
 
     public static <T> TreeNode<T> of(T value) {
