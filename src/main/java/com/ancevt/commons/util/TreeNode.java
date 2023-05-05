@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2023 the original author or authors.
+ * See the notice.md file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.ancevt.commons.util;
 
 import lombok.AllArgsConstructor;
@@ -7,10 +24,12 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 @NoArgsConstructor
@@ -95,6 +114,10 @@ public class TreeNode<T> {
         return !isEmpty();
     }
 
+    public List<TreeNode<T>> children() {
+        return new ArrayList<>(children);
+    }
+
     public String toTreeString() {
         return toTreeString(treeNode -> treeNode.getValue().toString());
     }
@@ -103,6 +126,16 @@ public class TreeNode<T> {
         return toTreeStringFunction.apply(this) +
                 System.lineSeparator() +
                 walk(this, "", toTreeStringFunction);
+    }
+
+    public int countAllNodes() {
+        return actualRecursiveCountAllNodes() + 1;
+    }
+
+    private int actualRecursiveCountAllNodes() {
+        AtomicInteger result = new AtomicInteger(children.size());
+        children.forEach(treeNode -> result.addAndGet(treeNode.actualRecursiveCountAllNodes()));
+        return result.get();
     }
 
     private String walk(TreeNode<T> node, String prefix, Function<TreeNode<T>, String> toTreeStringFunction) {
@@ -145,7 +178,7 @@ public class TreeNode<T> {
     }
 
     public static <T> TreeNode<T> of(T value) {
-        return new TreeNode<>(value, Map.of());
+        return new TreeNode<>(value, Collections.EMPTY_MAP);
     }
 
     public static <T> TreeNode<T> of(T value, Map<String, Object> properties) {
@@ -153,22 +186,27 @@ public class TreeNode<T> {
     }
 
     public static void main(String[] args) {
-        TreeNode<String> root = TreeNode.of("root", Map.of("type", "type1"));
+        TreeNode<String> root = TreeNode.of("root", Collections.singletonMap("type", "type1"));
+
+
+        TreeNode<String> rootCheck = null;
 
         for (int i = 0; i < 3; i++) {
-            TreeNode<String> level0 = TreeNode.of("level0_" + i, Map.of("type", "type2"));
+            TreeNode<String> level0 = TreeNode.of("level0_" + i, Collections.singletonMap("type", "type2"));
 
             for (int j = 0; j < 4; j++) {
-                TreeNode<String> level1 = TreeNode.of("level1_" + j, Map.of("type", "type3"));
+                TreeNode<String> level1 = TreeNode.of("level1_" + j, Collections.singletonMap("type", "type3"));
                 level0.add(level1);
 
                 if (new Random().nextBoolean()) {
-                    TreeNode<String> node = TreeNode.of("node_" + j, Map.of("type", "type3"));
+                    TreeNode<String> node = TreeNode.of("node_" + j, Collections.singletonMap("type", "type3"));
                     level1.add(node);
 
                     if (new Random().nextBoolean()) {
-                        TreeNode<String> node2 = TreeNode.of("node_" + j, Map.of("type", "type3"));
+                        TreeNode<String> node2 = TreeNode.of("node_" + j, Collections.singletonMap("type", "type3"));
                         node.add(node2);
+
+                        rootCheck = node2;
                     }
                 }
             }
@@ -176,6 +214,10 @@ public class TreeNode<T> {
             root.add(level0);
         }
 
+        System.out.println(">>> " + rootCheck.getRoot());
+
         System.out.println(root.toTreeString());
+
+        System.out.println("countAllNodes: " + root.countAllNodes());
     }
 }

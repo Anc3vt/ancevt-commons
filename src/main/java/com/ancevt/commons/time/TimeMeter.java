@@ -1,8 +1,9 @@
-package com.ancevt.commons.debug;
+package com.ancevt.commons.time;
 
-import com.ancevt.commons.concurrent.Async;
+import com.ancevt.commons.debug.TraceUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,19 +12,17 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 @RequiredArgsConstructor(staticName = "create")
+@Slf4j
 public class TimeMeter {
-
-    public static final TimeMeter DEFAULT = TimeMeter.create(System.out::println);
 
     private static final String EMPTY_STRING = "";
 
     private final List<Checkpoint> checkpoints = new ArrayList<>();
 
-    private long time;
-
     private Checkpoint currentCheckpoint;
 
-    private final Consumer<Checkpoint> checkpointConsumer;
+    private final Consumer<Checkpoint> beginCheckpointConsumer;
+    private final Consumer<Checkpoint> endCheckpointConsumer;
 
     public Optional<Checkpoint> checkpoint() {
         return checkpoint(EMPTY_STRING);
@@ -35,7 +34,7 @@ public class TimeMeter {
             return Optional.empty();
         } else {
             Optional<Checkpoint> result = Optional.of(end());
-            begin();
+            begin(name);
             return result;
         }
     }
@@ -44,14 +43,10 @@ public class TimeMeter {
         begin(EMPTY_STRING);
     }
 
-    public boolean state() {
-        return currentCheckpoint != null;
-    }
-
     public Checkpoint begin(String name) {
         if (currentCheckpoint != null) throw new IllegalStateException("Previous checkpoint is not ended");
-        time = System.currentTimeMillis();
-        currentCheckpoint = Checkpoint.of(name, time);
+        currentCheckpoint = Checkpoint.of(name, System.currentTimeMillis());
+        beginCheckpointConsumer.accept(currentCheckpoint);
         return currentCheckpoint;
     }
 
@@ -59,18 +54,50 @@ public class TimeMeter {
         if (currentCheckpoint == null) throw new IllegalStateException("End before begin");
         currentCheckpoint.close();
         checkpoints.add(currentCheckpoint);
-        checkpointConsumer.accept(currentCheckpoint);
+        endCheckpointConsumer.accept(currentCheckpoint);
         Checkpoint result = currentCheckpoint;
         currentCheckpoint = null;
         return result;
     }
 
     public List<Checkpoint> checkpoints() {
-        return List.copyOf(checkpoints);
+        return new ArrayList<>(checkpoints);
     }
 
-    public static TimeMeter create() {
-        return create(System.out::println);
+    public boolean state() {
+        return currentCheckpoint != null;
+    }
+
+    public static TimeMeter createSlf4j() {
+        return create(
+                c -> log.debug("<g>*** BEGIN " + c.getName() + "<>"),
+                c -> log.debug("<y>*** END " + c.getName() + " " + c.formattedTime() + "<>")
+        );
+    }
+
+    public static TimeMeter createSlf4jColorized() {
+        return create(
+                c -> log.debug("<g>" + "*** BEGIN " + c.getName() + "<>"),
+                c -> log.debug("<y>" + "*** END " + c.getName() + " " + c.formattedTime() + "<>")
+        );
+    }
+
+    public static TimeMeter createSilent() {
+        return create(c -> {}, c -> {});
+    }
+
+    public static TimeMeter createStdout() {
+        return create(
+                c -> System.out.println("*** BEGIN " + c.getName()),
+                c -> System.out.println("*** END " + c.getName() + " " + c.formattedTime())
+        );
+    }
+
+    public static TimeMeter createStdoutColorized() {
+        return create(
+                c -> System.out.println(TraceUtils.colorize("<g>*** BEGIN " + c.getName() + "<>")),
+                c -> System.out.println(TraceUtils.colorize("<y>*** END " + c.getName() + " " + c.formattedTime() + "<>"))
+        );
     }
 
     @RequiredArgsConstructor(access = AccessLevel.PRIVATE, staticName = "of")
@@ -92,7 +119,7 @@ public class TimeMeter {
             return endTime != 0L;
         }
 
-        public String formattedDifference() {
+        public String formattedTime() {
             long diff = difference();
 
             return String.format(
@@ -110,26 +137,13 @@ public class TimeMeter {
 
         @Override
         public String toString() {
-            return getClass().getSimpleName() + "[" + name + ", " + formattedDifference() + "]";
+            return getClass().getSimpleName() + "[" + name + ", " + formattedTime() + "]";
+        }
+
+        public String getName() {
+            return name;
         }
     }
 
-
-    public static void main(String[] args) {
-        TimeMeter.DEFAULT.checkpoint();
-
-        Async.wait(1111, TimeUnit.MILLISECONDS);
-
-        TimeMeter.DEFAULT.checkpoint();
-
-        Async.wait(1111, TimeUnit.MILLISECONDS);
-
-        TimeMeter.DEFAULT.checkpoint();
-
-        Async.wait(1111, TimeUnit.MILLISECONDS);
-
-        TimeMeter.DEFAULT.checkpoint();
-
-        Async.wait(1111, TimeUnit.MILLISECONDS);
-    }
 }
+
