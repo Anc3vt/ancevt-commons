@@ -18,8 +18,9 @@
 package com.ancevt.commons.debug;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -172,7 +173,7 @@ public class TraceUtils {
         }
 
         try {
-            Files.writeString(Path.of(String.format("/tmp/trace_%s.txt", traceId)), colorize(object + "<>") + "\n",
+            Files.write(Paths.get(String.format("/tmp/trace_%s.txt", traceId)), colorize(object + "<>\n").getBytes(StandardCharsets.UTF_8),
                     StandardOpenOption.CREATE,
                     StandardOpenOption.WRITE,
                     StandardOpenOption.APPEND

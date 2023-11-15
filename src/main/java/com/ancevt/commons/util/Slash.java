@@ -19,6 +19,7 @@ package com.ancevt.commons.util;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Slash {
     public static String slashSafe(String path) {
@@ -26,6 +27,6 @@ public class Slash {
     }
 
     public static Path slashSafe(Path path) {
-        return Path.of(path.toString().replace('/', File.separatorChar));
+        return Paths.get(path.toString().replace('/', File.separatorChar));
     }
 }

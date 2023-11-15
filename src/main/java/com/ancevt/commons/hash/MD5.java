@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -39,7 +40,7 @@ public class MD5 {
 
     public static String hashFile(String path) {
         try {
-            return bytesToHex(hash(Files.readAllBytes(Path.of(path))));
+            return bytesToHex(hash(Files.readAllBytes(Paths.get(path))));
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }

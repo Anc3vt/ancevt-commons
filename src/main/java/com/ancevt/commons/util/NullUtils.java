@@ -17,7 +17,6 @@
  */
 package com.ancevt.commons.util;
 
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class NullUtils {
@@ -33,13 +32,5 @@ public class NullUtils {
         }
     }
 
-    public static void main(String[] args) {
-        Map<String, String> map = Map.of("key", "value");
 
-        ifNotNullOrElse(map.get("key"), value -> {
-            System.out.println(value);
-        }, () -> {
-            System.out.println("null");
-        });
-    }
 }
