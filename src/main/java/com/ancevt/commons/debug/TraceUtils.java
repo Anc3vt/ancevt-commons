@@ -77,10 +77,10 @@ public class TraceUtils {
     private static final Map<String, Boolean> tracedOnceMap = new HashMap<>();
 
     public static void timeCheck(Object str) {
-        if(lastTime != 0L) {
+        if (lastTime != 0L) {
             long currentTime = System.currentTimeMillis();
-            trace("[TC] " + str +": " + (currentTime - lastTime));
-        }else {
+            trace("[TC] " + str + ": " + (currentTime - lastTime));
+        } else {
             trace("[TC] " + str);
         }
         lastTime = System.currentTimeMillis();
@@ -166,17 +166,36 @@ public class TraceUtils {
         return trace(object, "");
     }
 
-    public static Object trace(Object object, String traceId) {
-        if (!tracedOnceMap.containsKey(traceId)) {
-            tracedOnceMap.put(traceId, true);
-            trace("\n\n<W><a>           " + LocalDateTime.now() + "           <>\n\n", traceId);
+    public static Object trace1(Object object) {return trace(object, "/tmp/1");}
+
+    public static Object trace2(Object object) {return trace(object, "/tmp/2");}
+
+    public static Object trace3(Object object) {return trace(object, "/tmp/3");}
+
+    public static Object trace4(Object object) {return trace(object, "/tmp/4");}
+
+    public static Object trace5(Object object) {return trace(object, "/tmp/5");}
+
+    public static Object trace6(Object object) {return trace(object, "/tmp/6");}
+
+    public static Object trace7(Object object) {return trace(object, "/tmp/7");}
+
+    public static Object trace8(Object object) {return trace(object, "/tmp/8");}
+
+    public static Object trace9(Object object) {return trace(object, "/tmp/9");}
+
+
+    public static Object trace(Object object, String file) {
+        if (!tracedOnceMap.containsKey(file)) {
+            tracedOnceMap.put(file, true);
+            trace(String.format("\n\n<W><a> %s %s <>\n\n", LocalDateTime.now(), file), file);
         }
 
         try {
-            Files.write(Paths.get(String.format("/tmp/trace_%s.txt", traceId)), colorize(object + "<>\n").getBytes(StandardCharsets.UTF_8),
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.WRITE,
-                    StandardOpenOption.APPEND
+            Files.write(Paths.get(file), colorize(object + "<>\n").getBytes(StandardCharsets.UTF_8),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.WRITE,
+                StandardOpenOption.APPEND
             );
             System.out.println(colorize(object + "<>"));
         } catch (IOException e) {

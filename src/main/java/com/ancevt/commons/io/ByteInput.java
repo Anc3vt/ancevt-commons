@@ -40,7 +40,7 @@ public class ByteInput implements DataInput {
     private ByteInput(byte[] bytes) {
         this.bytes = bytes;
         dataInputStream = new DataInputStream(
-                byteArrayInputStream = new ByteArrayInputStream(bytes)
+            byteArrayInputStream = new ByteArrayInputStream(bytes)
         );
     }
 
@@ -77,7 +77,7 @@ public class ByteInput implements DataInput {
         }
     }
 
-    public byte[] readNBytes(InputStream is, int len) throws IOException {
+    private byte[] readNBytes(InputStream is, int len) throws IOException {
         if (len < 0) {
             throw new IllegalArgumentException("len < 0");
         }

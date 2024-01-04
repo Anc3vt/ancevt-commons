@@ -198,7 +198,7 @@ public class ByteOutput {
         }
     }
 
-    public ByteOutput writeUTF(String s) {
+    public ByteOutput writeUtf(String s) {
         try {
             dataOutputStream.writeUTF(s);
             return this;
