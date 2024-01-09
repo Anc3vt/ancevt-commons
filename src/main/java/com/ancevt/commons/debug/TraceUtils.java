@@ -17,12 +17,17 @@
  */
 package com.ancevt.commons.debug;
 
+import com.ancevt.commons.log.ColorizedLogTurboFilter;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,9 +79,15 @@ public class TraceUtils {
 
     private static long lastTime;
 
+    @Getter
+    @Setter
+    private static boolean alsoStdoutPrint;
+
     private static final Map<String, Boolean> tracedOnceMap = new HashMap<>();
 
     public static void timeCheck(Object str) {
+        ColorizedLogTurboFilter f = new ColorizedLogTurboFilter();
+
         if (lastTime != 0L) {
             long currentTime = System.currentTimeMillis();
             trace("[TC] " + str + ": " + (currentTime - lastTime));
@@ -157,6 +168,14 @@ public class TraceUtils {
         TraceUtils.enabled = enabled;
     }
 
+    public static void clearDefaultTraces() {
+        for(int i = 0; i < 100; i ++) {
+            for(int j = 1; j < 9; j ++) {
+                trace("", "/tmp/" + j);
+            }
+        }
+    }
+
     public final void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -166,28 +185,37 @@ public class TraceUtils {
         return trace(object, "");
     }
 
-    public static Object trace1(Object object) {return trace(object, "/tmp/1");}
+    public static Object trace_1(Object object) {return trace(object, "/tmp/1");}
 
-    public static Object trace2(Object object) {return trace(object, "/tmp/2");}
+    public static Object trace_2(Object object) {return trace(object, "/tmp/2");}
 
-    public static Object trace3(Object object) {return trace(object, "/tmp/3");}
+    public static Object trace_3(Object object) {return trace(object, "/tmp/3");}
 
-    public static Object trace4(Object object) {return trace(object, "/tmp/4");}
+    public static Object trace_4(Object object) {return trace(object, "/tmp/4");}
 
-    public static Object trace5(Object object) {return trace(object, "/tmp/5");}
+    public static Object trace_5(Object object) {return trace(object, "/tmp/5");}
 
-    public static Object trace6(Object object) {return trace(object, "/tmp/6");}
+    public static Object trace_6(Object object) {return trace(object, "/tmp/6");}
 
-    public static Object trace7(Object object) {return trace(object, "/tmp/7");}
+    public static Object trace_7(Object object) {return trace(object, "/tmp/7");}
 
-    public static Object trace8(Object object) {return trace(object, "/tmp/8");}
+    public static Object trace_8(Object object) {return trace(object, "/tmp/8");}
 
-    public static Object trace9(Object object) {return trace(object, "/tmp/9");}
+    public static Object trace_9(Object object) {return trace(object, "/tmp/9");}
 
 
     public static Object trace(Object object, String file) {
+        if (object == null) object = "null";
+
+        if (object instanceof byte[]) {
+            return trace(Arrays.toString((byte[]) object), file);
+        }
+
         if (!tracedOnceMap.containsKey(file)) {
             tracedOnceMap.put(file, true);
+            for(int i = 0; i < 64; i ++) {
+                trace("", file);
+            }
             trace(String.format("\n\n<W><a> %s %s <>\n\n", LocalDateTime.now(), file), file);
         }
 
@@ -197,7 +225,9 @@ public class TraceUtils {
                 StandardOpenOption.WRITE,
                 StandardOpenOption.APPEND
             );
-            System.out.println(colorize(object + "<>"));
+            if (alsoStdoutPrint) {
+                System.out.println(colorize(object + "<>"));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
