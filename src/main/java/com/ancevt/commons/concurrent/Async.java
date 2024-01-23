@@ -25,14 +25,20 @@ public class Async {
         new Lock().lock(time, timeUnit);
     }
 
-    public static void run(Runnable runnable) {
-        new Thread(runnable).start();
+    public static Thread run(Runnable runnable) {
+        Thread thread = new Thread(runnable);
+        thread.setName("_async_" + thread.getName());
+        thread.start();
+        return thread;
     }
 
-    public static void runLater(long time, TimeUnit timeUnit, Runnable runnable) {
-        new Thread(() -> {
+    public static Thread runLater(long time, TimeUnit timeUnit, Runnable runnable) {
+        Thread thread = new Thread(() -> {
             new Lock().lock(time, timeUnit);
             runnable.run();
-        }).start();
+        });
+        thread.setName("_async_" + thread.getName());
+        thread.start();
+        return thread;
     }
 }
