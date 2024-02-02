@@ -25,13 +25,13 @@ import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.Map;
 
-public class InterfaceStaticUtils {
+public class InterfaceStaticClear {
 
-    private InterfaceStaticUtils(){}
+    private InterfaceStaticClear(){}
 
     public static void clearAll(Class<?> clazz) {
         Reflections reflections = new Reflections(clazz.getPackage().getName(), new SubTypesScanner(false));
-        new HashSet<>(reflections.getSubTypesOf(clazz)).forEach(InterfaceStaticUtils::clear);
+        new HashSet<>(reflections.getSubTypesOf(clazz)).forEach(InterfaceStaticClear::clear);
     }
 
     public static <T> void clear(Class<T> iface) {
