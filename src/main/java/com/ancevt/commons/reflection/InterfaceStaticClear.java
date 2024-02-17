@@ -29,9 +29,9 @@ public class InterfaceStaticClear {
 
     private InterfaceStaticClear(){}
 
-    public static void clearAll(Class<?> clazz) {
-        Reflections reflections = new Reflections(clazz.getPackage().getName(), new SubTypesScanner(false));
-        new HashSet<>(reflections.getSubTypesOf(clazz)).forEach(InterfaceStaticClear::clear);
+    public static void clearAllInPackage(Class<?> classPackageOf) {
+        Reflections reflections = new Reflections(classPackageOf.getPackage().getName(), new SubTypesScanner(false));
+        new HashSet<>(reflections.getSubTypesOf(classPackageOf)).forEach(InterfaceStaticClear::clear);
     }
 
     public static <T> void clear(Class<T> iface) {
@@ -39,8 +39,10 @@ public class InterfaceStaticClear {
         for (Field field : declaredFields) {
             if (Modifier.isStatic(field.getModifiers())) {
                 try {
-                    Map<T, Object> map = (Map<T, Object>) field.get(null);
-                    map.clear();
+                    if(field.getType().equals(Map.class)) {
+                        Map<T, Object> map = (Map<T, Object>) field.get(null);
+                        map.clear();
+                    }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }

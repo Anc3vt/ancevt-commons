@@ -62,15 +62,15 @@ public class ObjectPropertyTool {
                     TypeFilter<Object> typeFilter = (TypeFilter<Object>) typeFilterMap.get(type);
                     method.invoke(object, typeFilter.decode(valueStr));
                 } else if (type == byte.class) {
-                    method.invoke(object, Byte.parseByte(valueStr));
+                    method.invoke(object, Byte.parseByte(round(valueStr)));
                 } else if (type == short.class) {
-                    method.invoke(object, Short.parseShort(valueStr));
+                    method.invoke(object, Short.parseShort(round(valueStr)));
                 } else if (type == char.class) {
                     method.invoke(object, valueStr.charAt(0));
                 } else if (type == long.class) {
-                    method.invoke(object, Long.parseLong(valueStr));
+                    method.invoke(object, Long.parseLong(round(valueStr)));
                 } else if (type == int.class) {
-                    method.invoke(object, Integer.parseInt(valueStr));
+                    method.invoke(object, Integer.parseInt(round(valueStr)));
                 } else if (type == float.class) {
                     method.invoke(object, Float.parseFloat(valueStr));
                 } else if (type == double.class) {
@@ -87,6 +87,10 @@ public class ObjectPropertyTool {
         });
 
         return object;
+    }
+
+    private String round(String number) {
+        return number.contains(".") ? number.substring(0, number.indexOf(".")) : number;
     }
 
     public Map<String, Object> getProperties(Object object) {
@@ -113,13 +117,14 @@ public class ObjectPropertyTool {
             throw new IllegalStateException(e);
         }
     }
-    
-    public Object createObject(Class<?> type, Map<String,Object> propertyMap) {
+
+    public Object createObject(Class<?> type, Map<String, Object> propertyMap) {
         try {
             Object result = type.getConstructor().newInstance();
             setProperties(result, propertyMap);
             return result;
-        } catch (InstantiationException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        } catch (InstantiationException | InvocationTargetException | IllegalAccessException |
+                 NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
     }
