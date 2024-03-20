@@ -24,6 +24,7 @@ import ch.qos.logback.core.spi.FilterReply;
 import com.ancevt.commons.debug.TraceUtils;
 import org.slf4j.Marker;
 
+
 public class ColorizedLogTurboFilter extends TurboFilter {
 
     private static boolean enabled;
@@ -38,12 +39,19 @@ public class ColorizedLogTurboFilter extends TurboFilter {
 
     @Override
     public FilterReply decide(Marker marker, Logger logger, Level level, String s, Object[] objects, Throwable throwable) {
-        if (!enabled) return FilterReply.NEUTRAL;
-
         boolean logChanged = false;
 
         if (s != null && s.contains("<>")) {
-            s = TraceUtils.colorize(s);
+            if(enabled) {
+                s = TraceUtils.colorize(s);
+            } else {
+                boolean tmp = TraceUtils.isEnabled();
+                TraceUtils.setEnabled(false);
+                s = TraceUtils.colorize(s);
+                TraceUtils.setEnabled(tmp);
+            }
+
+
             logChanged = true;
         }
 
