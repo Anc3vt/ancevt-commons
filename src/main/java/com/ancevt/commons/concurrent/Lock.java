@@ -17,6 +17,9 @@
  */
 package com.ancevt.commons.concurrent;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -25,8 +28,17 @@ public class Lock {
     private CountDownLatch countDownLatch;
     private State state;
 
+    @Setter
+    @Getter
+    private Object data;
+
     public Lock() {
         state = State.NOT_LOCKED;
+    }
+
+    public Lock(Object data) {
+        this();
+        this.data = data;
     }
 
     public boolean lock() {
