@@ -25,14 +25,17 @@ public class StackTraceUtil {
         StringBuilder stringBuilder = new StringBuilder();
         StackTraceElement[] stackTraceElements = throwable.getStackTrace();
 
+
+        stringBuilder.append(String.format("Exception %s: ", throwable.getClass().getName()));
         stringBuilder.append(throwable.getLocalizedMessage());
         stringBuilder.append(System.lineSeparator());
 
+
         Arrays.stream(stackTraceElements).forEach(stackTraceElement ->
-                stringBuilder
-                        .append("\t")
-                        .append(stackTraceElement.toString())
-                        .append(System.lineSeparator())
+            stringBuilder
+                .append("  ")
+                .append(stackTraceElement.toString())
+                .append(System.lineSeparator())
         );
 
         Throwable cause = throwable.getCause();
@@ -43,4 +46,5 @@ public class StackTraceUtil {
 
         return stringBuilder.toString();
     }
+
 }
