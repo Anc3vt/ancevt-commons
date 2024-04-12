@@ -19,24 +19,28 @@ package com.ancevt.commons.platformdepend;
 
 public class OsDetector {
 
-    private static final String OS = System.getProperty("os.name").toLowerCase();
+    private static final String OS = System.getProperty("os.name");
 
     public static boolean isWindows() {
-        return OS.contains("win");
+        if (OS == null) return false;
+        return OS.toLowerCase().contains("win");
     }
 
     public static boolean isMac() {
-        return OS.contains("mac");
-    }
-
-    public static boolean isUnix() {
-        return OS.contains("nix")
-                || OS.contains("nux")
-                || OS.indexOf("aix") > 0;
+        if (OS == null) return false;
+        return OS.toLowerCase().contains("mac");
     }
 
     public static boolean isSolaris() {
-        return OS.contains("sunos");
+        if (OS == null) return false;
+        return OS.toLowerCase().contains("sunos");
+    }
+
+    public static boolean isUnix() {
+        if (OS == null) return false;
+        return OS.contains("nix")
+            || OS.contains("nux")
+            || OS.indexOf("aix") > 0;
     }
 
     public static void main(String[] args) {
