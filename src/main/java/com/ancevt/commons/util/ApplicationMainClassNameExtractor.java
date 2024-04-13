@@ -17,11 +17,29 @@
  */
 package com.ancevt.commons.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.Map;
 
+/**
+ * Utility class for extracting the main class name of the application.
+ * <p>
+ * This class provides a static method to retrieve the fully qualified class name of the main class
+ * by analyzing the stack trace. It should be noted that this method may not always provide accurate
+ * results, especially in environments where the application lifecycle is managed by a server
+ * or when executed in a multi-threaded context.
+ * </p>
+ */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApplicationMainClassNameExtractor {
-
-    public static String get() throws MainClassNameExtractorException {
+    /**
+     * Retrieves the fully qualified name of the main class of the application.
+     *
+     * @return The fully qualified name of the main class.
+     * @throws MainClassNameExtractorException if the main class name cannot be extracted reliably.
+     */
+    public static String getMainClassName() throws MainClassNameExtractorException {
         Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
         for (Map.Entry<Thread, StackTraceElement[]> entry : map.entrySet()) {
             Thread thread = entry.getKey();
@@ -38,7 +56,7 @@ public class ApplicationMainClassNameExtractor {
         throw new MainClassNameExtractorException("Unable to extract application main class name");
     }
 
-    public static class MainClassNameExtractorException extends Exception {
+    public static class MainClassNameExtractorException extends RuntimeException {
 
         public MainClassNameExtractorException(String message) {
             super(message);
