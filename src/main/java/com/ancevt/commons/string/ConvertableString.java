@@ -1,7 +1,10 @@
 package com.ancevt.commons.string;
 
+import lombok.Getter;
+
 public class ConvertableString {
 
+    @Getter
     private final String string;
 
     private ConvertableString(String string) {
