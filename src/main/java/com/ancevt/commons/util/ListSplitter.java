@@ -63,7 +63,7 @@ public class ListSplitter {
             list.add(Math.random() + "");
         }
 
-        List<List<String>> s = split(list, 100);
+        List<List<String>> s = split(list, 2);
 
         System.out.println(s);
 

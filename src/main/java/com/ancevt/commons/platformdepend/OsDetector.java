@@ -38,26 +38,10 @@ public class OsDetector {
 
     public static boolean isUnix() {
         if (OS == null) return false;
-        return OS.contains("nix")
-            || OS.contains("nux")
-            || OS.indexOf("aix") > 0;
+        String os = OS.toLowerCase();
+        return os.contains("nix")
+            || os.contains("nux")
+            || os.contains("aix");
     }
-
-    public static void main(String[] args) {
-        System.out.println("os.name: " + OS);
-
-        if (isWindows()) {
-            System.out.println("This is Windows");
-        } else if (isMac()) {
-            System.out.println("This is Mac");
-        } else if (isUnix()) {
-            System.out.println("This is Unix or Linux");
-        } else if (isSolaris()) {
-            System.out.println("This is Solaris");
-        } else {
-            System.out.println("Your OS is not support!!");
-        }
-    }
-
 }
 

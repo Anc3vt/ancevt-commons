@@ -24,7 +24,7 @@ public class PropertyWrapper {
 
     public static Properties argsToProperties(String[] args, Properties properties) {
         for (String arg : args) {
-            if (arg.startsWith("-P")) {
+            if (arg.startsWith("-D")) {
                 arg = arg.substring(2);
                 String[] split = arg.split("=");
                 String key = split[0];
@@ -34,5 +34,9 @@ public class PropertyWrapper {
         }
 
         return properties;
+    }
+
+    public static Properties argsToProperties(String[] args) {
+        return argsToProperties(args, System.getProperties());
     }
 }

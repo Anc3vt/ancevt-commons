@@ -5,7 +5,7 @@
 
     <groupId>com.ancevt.commons</groupId>
     <artifactId>ancevt-commons</artifactId>
-    <version>1.0.0.9</version>
+    <version>1.0.1</version>
 
     <name>Ancevt Commons Library</name>
     <url>https://github.com/Anc3vt/ancevt-commons</url>
@@ -43,7 +43,6 @@
             <id>ancevt</id>
             <url>https://packages.ancevt.com/releases</url>
             <snapshots>
-                <enabled>false</enabled>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
@@ -51,18 +50,17 @@
             <id>ancevt-snapshot</id>
             <url>https://packages.ancevt.com/snapshots</url>
             <snapshots>
-                <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
     </repositories>
 
     <properties>
-        <ch.qos.logback-logback-classic.version>1.2.13</ch.qos.logback-logback-classic.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
         <gson.version>2.10.1</gson.version>
         <reflections.version>0.10.2</reflections.version>
         <hamcrest-junit.version>2.0.0.0</hamcrest-junit.version>
-        <java.version>1.8</java.version>
         <junit-jupiter-api.version>5.9.2</junit-jupiter-api.version>
         <logback-classic.version>1.4.14</logback-classic.version>
         <lombok.version>1.18.26</lombok.version>
@@ -70,14 +68,13 @@
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${ch.qos.logback-logback-classic.version}</version>
+            <version>${logback-classic.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>

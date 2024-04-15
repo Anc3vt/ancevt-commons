@@ -17,7 +17,6 @@
  */
 package com.ancevt.commons.fs;
 
-import com.ancevt.commons.json.JsonEngine;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,6 +39,7 @@ import java.util.StringTokenizer;
 public class IsolatedDirectory {
 
     @Setter
+    @Getter
     private Path baseDir = Paths.get(System.getProperty("user.home")).resolve(".isolated-directory-utils");
 
     public IsolatedDirectory(Path baseDir) {
@@ -97,9 +97,6 @@ public class IsolatedDirectory {
         }
     }
 
-    public void writeObject(Object object, String relativePath) {
-        writeString(JsonEngine.gson().toJson(object), relativePath);
-    }
 
     public String readString(String relativePath) {
         return new String(readBytes(relativePath(relativePath)), StandardCharsets.UTF_8);
@@ -112,11 +109,6 @@ public class IsolatedDirectory {
             log.error(e.getMessage(), e);
             throw new IsolatedDirectoryException(e);
         }
-    }
-
-    public <T> T readObject(Class<T> clazz, String relativePath) {
-        String string = readString(relativePath);
-        return JsonEngine.gson().fromJson(string, clazz);
     }
 
     public Path dir() {
