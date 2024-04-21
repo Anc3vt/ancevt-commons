@@ -51,7 +51,6 @@ public class ColorizedLogTurboFilter extends TurboFilter {
                 TraceUtils.setEnabled(tmp);
             }
 
-
             logChanged = true;
         }
 

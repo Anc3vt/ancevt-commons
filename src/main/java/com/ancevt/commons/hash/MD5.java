@@ -45,10 +45,6 @@ public class MD5 {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(MD5.hashFile("README.md"));
-    }
-
     private static String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {

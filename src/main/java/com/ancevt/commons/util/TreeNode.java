@@ -184,40 +184,4 @@ public class TreeNode<T> {
     public static <T> TreeNode<T> of(T value, Map<String, Object> properties) {
         return new TreeNode<>(value, properties);
     }
-
-    public static void main(String[] args) {
-        TreeNode<String> root = TreeNode.of("root", Collections.singletonMap("type", "type1"));
-
-
-        TreeNode<String> rootCheck = null;
-
-        for (int i = 0; i < 3; i++) {
-            TreeNode<String> level0 = TreeNode.of("level0_" + i, Collections.singletonMap("type", "type2"));
-
-            for (int j = 0; j < 4; j++) {
-                TreeNode<String> level1 = TreeNode.of("level1_" + j, Collections.singletonMap("type", "type3"));
-                level0.add(level1);
-
-                if (new Random().nextBoolean()) {
-                    TreeNode<String> node = TreeNode.of("node_" + j, Collections.singletonMap("type", "type3"));
-                    level1.add(node);
-
-                    if (new Random().nextBoolean()) {
-                        TreeNode<String> node2 = TreeNode.of("node_" + j, Collections.singletonMap("type", "type3"));
-                        node.add(node2);
-
-                        rootCheck = node2;
-                    }
-                }
-            }
-
-            root.add(level0);
-        }
-
-        System.out.println(">>> " + rootCheck.getRoot());
-
-        System.out.println(root.toTreeString());
-
-        System.out.println("countAllNodes: " + root.countAllNodes());
-    }
 }

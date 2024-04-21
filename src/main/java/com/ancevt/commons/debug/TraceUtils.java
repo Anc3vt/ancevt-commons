@@ -234,8 +234,4 @@ public class TraceUtils {
 
         return object;
     }
-
-    public static void main(String[] args) {
-        trace("<W><a>asdsd<>");
-    }
 }

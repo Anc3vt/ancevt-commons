@@ -54,20 +54,4 @@ public class ListSplitter {
         return result;
     }
 
-
-    public static void main(String[] args) throws InterruptedException {
-        final int partCount = 4;
-
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            list.add(Math.random() + "");
-        }
-
-        List<List<String>> s = split(list, 2);
-
-        System.out.println(s);
-
-    }
-
-
 }
