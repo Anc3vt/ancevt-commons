@@ -17,8 +17,6 @@
  */
 package com.ancevt.commons.string;
 
-import lombok.Getter;
-
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Function;
@@ -31,7 +29,6 @@ import java.util.function.ToLongFunction;
 
 public class ConvertableString {
 
-    @Getter
     private final String string;
 
     private ConvertableString(String string) {
@@ -44,6 +41,11 @@ public class ConvertableString {
 
     public boolean isNull() {
         return string == null;
+    }
+
+    @Override
+    public String toString() {
+        return string;
     }
 
     public int toInt() {
@@ -76,6 +78,14 @@ public class ConvertableString {
 
     public char toChar() {
         return string.charAt(0);
+    }
+
+    public String toStringOrDefault(String defaultValue) {
+        if (isNull()) {
+            return defaultValue;
+        } else {
+            return string;
+        }
     }
 
     public int toIntOrDefault(int defaultValue) {
@@ -135,6 +145,14 @@ public class ConvertableString {
             return string.charAt(0);
         } else {
             return defaultValue;
+        }
+    }
+
+    public String toStringOrSupply(Supplier<String> supplier) {
+        if (isNull()) {
+            return supplier.get();
+        } else {
+            return string;
         }
     }
 
