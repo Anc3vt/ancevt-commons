@@ -46,19 +46,20 @@ public class IsolatedDirectory {
         this.baseDir = baseDir;
     }
 
-    public void backup(Path file) {
+    public void backup(String relativePath) {
         try {
+            Path path = resolvePath(relativePath);
             String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-SSS"));
-            Files.copy(file, file.resolveSibling(file.getFileName() + "." + time));
+            Files.copy(path, path.resolveSibling(path.getFileName() + "." + time));
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
     }
 
-    public Path relativePath(String relativePath) {
+    public Path resolvePath(String relativePath) {
         StringTokenizer stringTokenizer = new StringTokenizer(relativePath, "/");
 
-        Path p = dir();
+        Path p = baseDir();
 
         while (stringTokenizer.hasMoreTokens()) {
             String token = stringTokenizer.nextToken();
@@ -71,9 +72,9 @@ public class IsolatedDirectory {
     }
 
     public void delete(String relativePath) {
-        Path file = relativePath(relativePath);
+        Path path = resolvePath(relativePath);
         try {
-            Files.deleteIfExists(file);
+            Files.deleteIfExists(path);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
@@ -83,10 +84,10 @@ public class IsolatedDirectory {
         writeBytes(data.getBytes(StandardCharsets.UTF_8), relativePath);
     }
 
-    public void writeBytes(byte[] data, String relativePath) {
+    public void writeBytes(byte[] data, String path) {
         try {
             Files.write(
-                relativePath(relativePath),
+                resolvePath(path),
                 data,
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE,
@@ -99,19 +100,20 @@ public class IsolatedDirectory {
 
 
     public String readString(String relativePath) {
-        return new String(readBytes(relativePath(relativePath)), StandardCharsets.UTF_8);
+        return new String(readBytes(relativePath), StandardCharsets.UTF_8);
     }
 
-    public byte[] readBytes(Path file) {
+    public byte[] readBytes(String relativePath) {
+        Path path = resolvePath(relativePath);
         try {
-            return Files.readAllBytes(file);
+            return Files.readAllBytes(path);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new IsolatedDirectoryException(e);
         }
     }
 
-    public Path dir() {
+    public Path baseDir() {
         if (!Files.exists(baseDir)) {
             try {
                 Files.createDirectories(baseDir);
@@ -123,36 +125,43 @@ public class IsolatedDirectory {
         return baseDir;
     }
 
-    public Path dir(String relativePath) {
-        Path p = dir();
+    public Path createSubdirectories(String relativePath) {
+        Path path = baseDir();
 
         StringTokenizer stringTokenizer = new StringTokenizer(relativePath, "/");
 
         while (stringTokenizer.hasMoreTokens()) {
             String token = stringTokenizer.nextToken();
             if (!token.isEmpty()) {
-                p = p.resolve(token);
+                path = path.resolve(token);
             }
         }
 
-        if (!Files.exists(p)) {
+        if (!Files.exists(path)) {
             try {
-                Files.createDirectories(p);
+                Files.createDirectories(path);
             } catch (IOException e) {
                 log.error(e.getMessage(), e);
                 throw new IsolatedDirectoryException(e);
             }
         }
 
-        return p;
+        return path;
     }
 
     public Optional<String> checkExists(String relativePath) {
-        Path p = relativePath(relativePath);
-        if (Files.exists(p)) {
+        Path path = resolvePath(relativePath);
+        if (Files.exists(path)) {
             return Optional.of(relativePath);
         }
         return Optional.empty();
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder(this.getClass().getSimpleName() + "{");
+        sb.append("baseDir=").append(baseDir);
+        sb.append('}');
+        return sb.toString();
+    }
 }
