@@ -39,6 +39,10 @@ public class ConvertableString {
         return new ConvertableString(string);
     }
 
+    public static ConvertableString empty() {
+        return new ConvertableString(null);
+    }
+
     public boolean isNull() {
         return string == null;
     }
@@ -91,7 +95,7 @@ public class ConvertableString {
     public int toIntOrDefault(int defaultValue) {
         try {
             return Integer.parseInt(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return defaultValue;
         }
     }
@@ -99,7 +103,7 @@ public class ConvertableString {
     public long toLongOrDefault(long defaultValue) {
         try {
             return Long.parseLong(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return defaultValue;
         }
     }
@@ -107,7 +111,7 @@ public class ConvertableString {
     public byte toByteOrDefault(byte defaultValue) {
         try {
             return Byte.parseByte(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return defaultValue;
         }
     }
@@ -115,7 +119,7 @@ public class ConvertableString {
     public short toShortOrDefault(short defaultValue) {
         try {
             return Short.parseShort(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return defaultValue;
         }
     }
@@ -123,7 +127,7 @@ public class ConvertableString {
     public float toFloatOrDefault(float defaultValue) {
         try {
             return Float.parseFloat(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return defaultValue;
         }
     }
@@ -131,7 +135,7 @@ public class ConvertableString {
     public double toDoubleOrDefault(double defaultValue) {
         try {
             return Double.parseDouble(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return defaultValue;
         }
     }
@@ -159,7 +163,7 @@ public class ConvertableString {
     public int toIntOrSupply(IntSupplier supplier) {
         try {
             return Integer.parseInt(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return supplier.getAsInt();
         }
     }
@@ -167,7 +171,7 @@ public class ConvertableString {
     public long toLongOrSupply(LongSupplier supplier) {
         try {
             return Long.parseLong(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return supplier.getAsLong();
         }
     }
@@ -175,7 +179,7 @@ public class ConvertableString {
     public byte toByteOrSupply(Supplier<Byte> supplier) {
         try {
             return Byte.parseByte(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return supplier.get();
         }
     }
@@ -183,7 +187,7 @@ public class ConvertableString {
     public short toShortOrSupply(Supplier<Short> supplier) {
         try {
             return Short.parseShort(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return supplier.get();
         }
     }
@@ -191,7 +195,7 @@ public class ConvertableString {
     public float toFloatOrSupply(Supplier<Float> supplier) {
         try {
             return Float.parseFloat(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return supplier.get();
         }
     }
@@ -199,7 +203,7 @@ public class ConvertableString {
     public double toDoubleOrSupply(DoubleSupplier supplier) {
         try {
             return Double.parseDouble(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return supplier.getAsDouble();
         }
     }
@@ -224,7 +228,7 @@ public class ConvertableString {
     public int toIntOrCompute(ToIntFunction<String> fn) {
         try {
             return Integer.parseInt(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return fn.applyAsInt(string);
         }
     }
@@ -232,7 +236,7 @@ public class ConvertableString {
     public long toLongOrCompute(ToLongFunction<String> fn) {
         try {
             return Long.parseLong(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return fn.applyAsLong(string);
         }
     }
@@ -240,7 +244,7 @@ public class ConvertableString {
     public byte toByteOrCompute(Function<String, Byte> fn) {
         try {
             return Byte.parseByte(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return fn.apply(string);
         }
     }
@@ -248,7 +252,7 @@ public class ConvertableString {
     public short toShortOrCompute(Function<String, Short> fn) {
         try {
             return Short.parseShort(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return fn.apply(string);
         }
     }
@@ -256,7 +260,7 @@ public class ConvertableString {
     public float toFloatOrCompute(Function<String, Float> fn) {
         try {
             return Float.parseFloat(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return fn.apply(string);
         }
     }
@@ -264,7 +268,7 @@ public class ConvertableString {
     public double toDoubleOrCompute(ToDoubleFunction<String> fn) {
         try {
             return Double.parseDouble(string);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return fn.applyAsDouble(string);
         }
     }
