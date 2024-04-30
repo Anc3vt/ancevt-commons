@@ -141,6 +141,7 @@ public class ConvertableString {
     }
 
     public boolean toBooleanOrDefault(boolean defaultValue) {
+        if(string == null) return defaultValue;
         return Boolean.parseBoolean(string);
     }
 
@@ -210,6 +211,7 @@ public class ConvertableString {
 
     public boolean toBooleanOrSupply(BooleanSupplier supplier) {
         try {
+            if(string == null) return supplier.getAsBoolean();
             return Boolean.parseBoolean(string);
         } catch (Exception ex) {
             return supplier.getAsBoolean();
@@ -275,6 +277,7 @@ public class ConvertableString {
 
     public boolean toBooleanOrCompute(Function<String, Boolean> fn) {
         try {
+            if(string == null) return fn.apply(null);
             return Boolean.parseBoolean(string);
         } catch (Exception ex) {
             return fn.apply(string);
