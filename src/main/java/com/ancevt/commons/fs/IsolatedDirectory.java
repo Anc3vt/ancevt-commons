@@ -17,16 +17,16 @@
  */
 package com.ancevt.commons.fs;
 
+import com.ancevt.commons.platform.OsUtils;
+import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,16 +35,11 @@ import java.util.StringTokenizer;
 
 @Getter
 @Slf4j
-@NoArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class IsolatedDirectory {
 
-    @Setter
     @Getter
-    private Path baseDir = Paths.get(System.getProperty("user.home")).resolve(".isolated-directory-utils");
-
-    public IsolatedDirectory(Path baseDir) {
-        this.baseDir = baseDir;
-    }
+    private final Path baseDir;
 
     public void backup(String relativePath) {
         try {
@@ -163,5 +158,13 @@ public class IsolatedDirectory {
         sb.append("baseDir=").append(baseDir);
         sb.append('}');
         return sb.toString();
+    }
+
+    public static IsolatedDirectory newIsolatedDirectory(Path baseDir) {
+        return new IsolatedDirectory(baseDir);
+    }
+
+    public static IsolatedDirectory newIsolatedDirectoryInApplicationData(Path relativePath) {
+        return new IsolatedDirectory(OsUtils.getApplicationDataPath().resolve(relativePath));
     }
 }
