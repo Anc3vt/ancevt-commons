@@ -35,7 +35,15 @@ public class ConvertableString {
         this.string = string;
     }
 
+    private ConvertableString(Object string) {
+        this.string = string == null ? null : String.valueOf(string);
+    }
+
     public static ConvertableString convert(String string) {
+        return new ConvertableString(string);
+    }
+
+    public static ConvertableString convert(Object string) {
         return new ConvertableString(string);
     }
 
