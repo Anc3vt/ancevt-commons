@@ -15,8 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ancevt.commons.time;
+package com.ancevt.uparser.commons.time;
 
+import com.ancevt.commons.time.HumanReadableTimeParser;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
