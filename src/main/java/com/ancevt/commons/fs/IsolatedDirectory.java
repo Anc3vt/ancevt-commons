@@ -106,6 +106,8 @@ public class IsolatedDirectory {
 
     public void writeBytes(byte[] data, String path) {
         try {
+            System.out.println("Write bytes to " + resolvePath(path).toAbsolutePath());
+
             Files.write(
                 resolvePath(path),
                 data,
@@ -167,6 +169,10 @@ public class IsolatedDirectory {
         }
 
         return path;
+    }
+
+    public boolean isExists(String relativePath) {
+        return Files.exists(resolvePath(relativePath));
     }
 
     public Optional<String> checkExists(String relativePath) {
