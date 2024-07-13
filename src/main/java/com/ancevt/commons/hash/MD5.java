@@ -17,9 +17,11 @@
  */
 package com.ancevt.commons.hash;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -45,7 +47,15 @@ public class MD5 {
         }
     }
 
-    private static String bytesToHex(byte[] bytes) {
+    public static String hashFile(Path file) {
+        try {
+            return bytesToHex(hash(Files.readAllBytes(file)));
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public static String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
             sb.append(String.format("%02x", b));
