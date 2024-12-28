@@ -86,6 +86,7 @@ public class TraceUtils {
     private static final Map<String, Boolean> tracedOnceMap = new HashMap<>();
 
     public static void timeCheck(Object str) {
+
         ColorizedLogTurboFilter f = new ColorizedLogTurboFilter();
 
         if (lastTime != 0L) {
@@ -234,4 +235,5 @@ public class TraceUtils {
 
         return object;
     }
+
 }
